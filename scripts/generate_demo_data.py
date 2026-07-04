@@ -24,7 +24,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SHAPE = json.loads((ROOT / "scripts" / "_bems_shape.json").read_text(encoding="utf-8"))
-OUT = ROOT / "web" / "public" / "data"
+# Sibling directory check for separated web app, falling back to local path
+sibling_web = ROOT.parent / "cu-energy-web"
+if (sibling_web / "public").is_dir():
+    OUT = sibling_web / "public" / "data"
+else:
+    OUT = ROOT / "web" / "public" / "data"
 MONTHLY_CSV = ROOT / "data" / "processed" / "en_cu" / "en_cu_monthly_meter.csv"
 
 # ---- Real reference constants -------------------------------------------------
